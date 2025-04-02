@@ -1,0 +1,7 @@
+{
+  "name": "beydex",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
