@@ -1,15 +1,27 @@
 import { onMounted, ref, watch } from 'vue'
 import { Directory, Filesystem } from '@capacitor/filesystem'
 import { Preferences } from '@capacitor/preferences'
-import { Storage } from '@ionic/storage'
 import { IBeyInfo } from '@/models/IBeyInfo'
 import { IBeyData } from '@/models/IBeyData'
+
+// Cordova SQLite
+import { Drivers, Storage } from '@ionic/storage'
+import CordovaSQliteDriver from 'localforage-cordovasqlitedriver'
+
+export const BEYDEX_STORAGE = new Storage({
+    driverOrder: [
+        CordovaSQliteDriver._driver,
+        Drivers.IndexedDB,
+        Drivers.LocalStorage
+    ]
+})
+
+await BEYDEX_STORAGE.defineDriver(CordovaSQliteDriver)
 
 const beywatches = ref<IBeyInfo[]>([])
 const TRADING_KEYNAME = 'tradings'
 
-const BEY_STORE = new Storage()
-await BEY_STORE.create()
+await BEYDEX_STORAGE.create()
 
 const cacheTradingCards = async () => {
     Preferences.set({
@@ -33,7 +45,9 @@ const convertBlobToBase64 = (blob: Blob) => {
 
 const loadSavedAsync = async () => {
     const tradingList = await Preferences.get({ key: TRADING_KEYNAME })
-    const tradesInPreferences = tradingList.value ? JSON.parse(tradingList.value) : []
+    const tradesInPreferences = tradingList.value
+        ? JSON.parse(tradingList.value)
+        : []
 
     for (const trade of tradesInPreferences) {
         const item = await Filesystem.readFile({
@@ -45,7 +59,10 @@ const loadSavedAsync = async () => {
     }
 }
 
-export const saveTradeAsync = async (trade: IBeyInfo, filename: string): Promise<IBeyInfo> => {
+export const saveTradeAsync = async (
+    trade: IBeyInfo,
+    filename: string
+): Promise<IBeyInfo> => {
     const response = await fetch(trade.webviewPath!)
     const blob = await response.blob()
     const beyData = convertBlobToBase64(blob) as unknown as IBeyData
@@ -67,12 +84,11 @@ export const saveTradeAsync = async (trade: IBeyInfo, filename: string): Promise
     }
 }
 
-
-export const useTradingGallery = () => {
+export const useStoreGallery = () => {
     onMounted(loadSavedAsync)
 
     const save = async (uuid: number) => {
-        const id = await BEY_STORE.get('id')
+        const id = await BEYDEX_STORAGE.get('id')
         if (id != uuid) return 0
         return id
     }

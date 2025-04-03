@@ -30,7 +30,7 @@
             <ion-grid>
                 <ion-row>
                     <ion-col>
-                        <ion-card @vue:mounted="useTradingGallery()"></ion-card>
+                        <ion-card @vue:mounted="useStoreGallery()"></ion-card>
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -73,8 +73,8 @@ import { ref } from 'vue'
 import { bandageSharp } from 'ionicons/icons'
 import {
     saveTradeAsync,
-    useTradingGallery
-} from '@/composables/useTradingGallery'
+    useStoreGallery
+} from '@/composables/useStoreGallery'
 import { IBeyInfo } from '@/models/IBeyInfo'
 
 const messages = ref<Message[]>(getMessages())
