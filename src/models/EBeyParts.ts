@@ -1,5 +1,5 @@
 export enum EBeyParts {
-    Blade,
-    Ratchet,
-    Bit
+    Blade = 'Blade',
+    Ratchet = 'Ratchet',
+    Bit = 'Bit'
 }

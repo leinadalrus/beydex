@@ -1,6 +1,6 @@
 export enum EBeyCategory {
-    Attack,
-    Defence,
-    Stamina,
-    Balance
+    Attack = 'Attack',
+    Defense = 'Defense',
+    Stamina = 'Stamina',
+    Balance = 'Balance'
 }
