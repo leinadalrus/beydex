@@ -2,7 +2,7 @@
     <ion-page>
         <ion-header :translucent="true">
             <ion-toolbar>
-                <ion-title>Beydex</ion-title>
+                <ion-title>BeyDex</ion-title>
             </ion-toolbar>
         </ion-header>
 
@@ -13,17 +13,27 @@
 
             <ion-header collapse="condense">
                 <ion-toolbar>
-                    <ion-title size="large">Beydex</ion-title>
+                    <ion-title size="large">BeyDex</ion-title>
                 </ion-toolbar>
             </ion-header>
 
-            <ExploreContainer name="Beydex" />
+            <ExploreContainer name="BeyDex" />
 
             <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-                <ion-fab-button @click="useTradingGallery()">
+                <ion-fab-button
+                    @click="(data: IBeyInfo, name: string) => saveTradeAsync(data, name)"
+                >
                     <ion-icon :icon="bandageSharp"></ion-icon>
                 </ion-fab-button>
             </ion-fab>
+
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <ion-card @vue:mounted="useTradingGallery()"></ion-card>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
 
             <ion-list>
                 <MessageListItem
@@ -41,14 +51,18 @@
 
 <script setup lang="ts">
 import {
+    IonCard,
+    IonCol,
     IonContent,
     IonFab,
+    IonGrid,
     IonHeader,
     IonIcon,
     IonList,
     IonPage,
     IonRefresher,
     IonRefresherContent,
+    IonRow,
     IonTitle,
     IonToolbar
 } from '@ionic/vue'
@@ -57,7 +71,11 @@ import MessageListItem from '@/components/MessageListItem.vue'
 import { getMessages, Message } from '@/data/messages'
 import { ref } from 'vue'
 import { bandageSharp } from 'ionicons/icons'
-import { useTradingGallery } from '@/composables/useTradingGallery'
+import {
+    saveTradeAsync,
+    useTradingGallery
+} from '@/composables/useTradingGallery'
+import { IBeyInfo } from '@/models/IBeyInfo'
 
 const messages = ref<Message[]>(getMessages())
 
