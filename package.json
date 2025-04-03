@@ -25,6 +25,7 @@
     "@ionic/vue-router": "^8.0.0",
     "cordova-sqlite-storage": "^7.0.0",
     "ionicons": "^7.0.0",
+    "localforage-cordovasqlitedriver": "^1.8.0",
     "vue": "^3.3.0",
     "vue-router": "^4.2.0"
   },
