@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { IonContent, IonCol, IonGrid, IonImg, IonRow } from '@ionic/vue'
+import {
+    IonCard,
+    IonContent,
+    IonCol,
+    IonGrid,
+    IonImg,
+    IonRow
+} from '@ionic/vue'
+import { useStoreGallery } from '@/composables/useStoreGallery'
 import { IBeyInfo } from '@/models/IBeyInfo'
 const beywatches = ref<IBeyInfo[]>([])
 </script>
@@ -10,6 +18,7 @@ const beywatches = ref<IBeyInfo[]>([])
         <ion-grid>
             <ion-row>
                 <ion-col size="2" v-for="bey in beywatches" :key="bey.id">
+                    <ion-card @vue:mounted="useStoreGallery()"></ion-card>
                     <ion-img :src="bey.webviewPath"></ion-img>
                 </ion-col>
             </ion-row>

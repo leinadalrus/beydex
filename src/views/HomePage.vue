@@ -19,6 +19,8 @@
 
             <ExploreContainer name="BeyDex" />
 
+            <ImageGrid />
+
             <ion-fab vertical="bottom" horizontal="center" slot="fixed">
                 <ion-fab-button
                     @click="(data: IBeyInfo, name: string) => saveTradeAsync(data, name)"
@@ -26,14 +28,6 @@
                     <ion-icon :icon="bandageSharp"></ion-icon>
                 </ion-fab-button>
             </ion-fab>
-
-            <ion-grid>
-                <ion-row>
-                    <ion-col>
-                        <ion-card @vue:mounted="useStoreGallery()"></ion-card>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
 
             <ion-list>
                 <MessageListItem
@@ -51,18 +45,14 @@
 
 <script setup lang="ts">
 import {
-    IonCard,
-    IonCol,
     IonContent,
     IonFab,
-    IonGrid,
     IonHeader,
     IonIcon,
     IonList,
     IonPage,
     IonRefresher,
     IonRefresherContent,
-    IonRow,
     IonTitle,
     IonToolbar
 } from '@ionic/vue'
@@ -71,11 +61,9 @@ import MessageListItem from '@/components/MessageListItem.vue'
 import { getMessages, Message } from '@/data/messages'
 import { ref } from 'vue'
 import { bandageSharp } from 'ionicons/icons'
-import {
-    saveTradeAsync,
-    useStoreGallery
-} from '@/composables/useStoreGallery'
+import { saveTradeAsync } from '@/composables/useStoreGallery'
 import { IBeyInfo } from '@/models/IBeyInfo'
+import ImageGrid from '@/components/ImageGrid.vue'
 
 const messages = ref<Message[]>(getMessages())
 

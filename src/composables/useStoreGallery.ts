@@ -9,6 +9,7 @@ import { Drivers, Storage } from '@ionic/storage'
 import CordovaSQliteDriver from 'localforage-cordovasqlitedriver'
 
 export const BEYDEX_STORAGE = new Storage({
+    name: '__mybeydexdatabase',
     driverOrder: [
         CordovaSQliteDriver._driver,
         Drivers.IndexedDB,
@@ -19,13 +20,13 @@ export const BEYDEX_STORAGE = new Storage({
 await BEYDEX_STORAGE.defineDriver(CordovaSQliteDriver)
 
 const beywatches = ref<IBeyInfo[]>([])
-const TRADING_KEYNAME = 'tradings'
+const BEYDEX_KEYNAME = 'beydices'
 
 await BEYDEX_STORAGE.create()
 
 const cacheTradingCards = async () => {
     Preferences.set({
-        key: TRADING_KEYNAME,
+        key: BEYDEX_KEYNAME,
         value: JSON.stringify(beywatches.value)
     })
 }
@@ -44,7 +45,7 @@ const convertBlobToBase64 = (blob: Blob) => {
 }
 
 const loadSavedAsync = async () => {
-    const tradingList = await Preferences.get({ key: TRADING_KEYNAME })
+    const tradingList = await Preferences.get({ key: BEYDEX_KEYNAME })
     const tradesInPreferences = tradingList.value
         ? JSON.parse(tradingList.value)
         : []
@@ -96,3 +97,24 @@ export const useStoreGallery = () => {
 }
 
 watch(beywatches, cacheTradingCards)
+
+// Publicly exported functions
+export async function getXBeyAsAll() {
+    return await BEYDEX_STORAGE.keys()
+}
+
+export async function getXBeyFromID(id: string) {
+    return await BEYDEX_STORAGE.get(id)
+}
+
+export async function setXBeyFromPairs(key: string, data: string) {
+    await BEYDEX_STORAGE.set(key, data)
+}
+
+export async function removeXBeyFromID(id: string) {
+    await BEYDEX_STORAGE.remove(id)
+}
+
+export async function clearXBeyAsAll() {
+    await BEYDEX_STORAGE.clear()
+}
