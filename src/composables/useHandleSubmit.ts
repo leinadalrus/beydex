@@ -1,23 +1,27 @@
 import { ref, watch } from 'vue'
-import type { IBeyInfo } from '@/models/IBeyInfo'
-import type { IBeyData } from '@/models/IBeyData'
+import { IBeyData } from '@/models/IBeyData.js'
+import { IBeyInfo } from '@/models/IBeyInfo.js'
 
 interface IMessageHead {
     method: string
     body: string
 }
 
+const asyncData = {
+    data: String,
+    err: Error
+}
+
+const { data, err } = asyncData
+
 const messageHeads = ref<IMessageHead[]>([])
 
-const { data, error } = await useAsyncData(() => useHandleSubmit())
-
 const useHandleSubmit = async () => {
-    await $fetch('api/submit', {
-        method: 'POST',
-        body: { data }
+    await fetch(`/api/${data}`, {
+        method: 'POST'
     })
 
-    if (error != null) return null
+    if (err != null) return err
 }
 
 const convertBlobToBase64 = (blob: Blob) => {
