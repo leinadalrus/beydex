@@ -1,32 +1,29 @@
 <script setup>
-import NavLink from "@/components/NavLink.vue"
+import NavLink from '@/components/NavLink.vue'
 
 defineProps({
     hyperlinks: {
-        type: String,
+        type: String
     },
     item: {
-        type: String,
-    },
+        type: String
+    }
 })
 </script>
 
 <template>
-    <aside
-        class="flex h-auto w-56 flex-col items-center gap-2 overflow-x-hidden p-1"
-    >
-        <article class="flex w-40 flex-col lg:flex-shrink-0 lg:overflow-y-auto">
-            <section class="flex flex-1 flex-col overflow-y-auto">
-                <ul class="flex-1 p-1">
+    <aside>
+        <article>
+            <section>
+                <ul>
                     <NavLink v-bind:href="dashboard">
-                        <div class="inline-flex w-12 flex-shrink-0 items-start">
+                        <div>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
                                 viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="size-6"
+                                stroke-width="1"
+                                stroke="black"
                             >
                                 <path
                                     stroke-linecap="round"
@@ -38,11 +35,7 @@ defineProps({
                         <address class="text-xs font-normal">Dashboard</address>
                     </NavLink>
 
-                    <li
-                        class="text-lg font-semibold text-black"
-                        v-for="link in hyperlinks"
-                        v-bind:key="link.id"
-                    >
+                    <li v-for="link in hyperlinks" v-bind:key="link.id">
                         <NavLink>{{ link }}</NavLink>
                     </li>
                 </ul>
