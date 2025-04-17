@@ -1,14 +1,8 @@
 <script setup>
+import { ref } from 'vue'
 import NavLink from '@/components/NavLink.vue'
 
-defineProps({
-    hyperlinks: {
-        type: String
-    },
-    item: {
-        type: String
-    }
-})
+const hyperlinks = ref([])
 </script>
 
 <template>
@@ -35,8 +29,8 @@ defineProps({
                         <address class="text-xs font-normal">Dashboard</address>
                     </NavLink>
 
-                    <li v-for="link in hyperlinks" v-bind:key="link.id">
-                        <NavLink>{{ link }}</NavLink>
+                    <li v-for="item in hyperlinks" v-bind:key="item.id">
+                        <NavLink>{{ item }}</NavLink>
                     </li>
                 </ul>
             </section>

@@ -1,15 +1,9 @@
 <script setup>
-import { reactive, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { IBeyInfo } from '@/models/IBeyInfo'
 
-const searchFinder = reactive({
-    name: {
-        type: String
-    },
-    description: {
-        type: String
-    }
-})
+const beyTrades = ref(IBeyInfo)
 
 const route = useRoute()
 
@@ -17,7 +11,13 @@ const loading = ref(false)
 const post = ref(null)
 const error = ref(null)
 
-async function searchItemByName(name) {
+async function searchViaProcessedValues(values) {
+    for (const bey of beyTrades) {
+        for (const items of bey.description)
+            if (values === bey.name || values === items)
+                return await fetch(`/api/${bey.name}`)
+    }
+
     return await fetch(`/api/${name}`)
 }
 
@@ -26,7 +26,7 @@ async function utilDataFetch() {
     loading.value = true
 
     try {
-        post.value = await searchItemByName(post.value)
+        post.value = await searchViaProcessedValues(post.value)
     } catch (err) {
         error.value = err.toString()
     } finally {
@@ -39,18 +39,13 @@ watch(() => route.params.id, utilDataFetch, { immediate: true })
 
 <template>
     <article class="m-4 p-3">
-        <input
-            type="search"
-            name="name"
-            placeholder="Search product here..."
-            v-model="searchFinder"
-        />
-        <PrimaryButton
+        <input type="search" name="name" placeholder="Search product here..." />
+        <button
             id=""
             type="text"
-            @click="(name) => searchItemByName(name)"
+            @click="(values) => searchViaProcessedValues(values)"
         >
             Search
-        </PrimaryButton>
+        </button>
     </article>
 </template>
