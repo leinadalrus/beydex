@@ -1,14 +1,24 @@
-<script setup lang="ts">
-import { IBeyInfo } from '@/models/IBeyInfo'
-const props = defineProps<{
-    beyInfo: IBeyInfo
-}>()
-</script>
+<script setup lang="ts"></script>
 
 <template>
     <article>
-        <li v-for="i in props" :key="i.id">
-            {{ i }}
-        </li>
+        <h1>
+            <slot name="title"></slot>
+        </h1>
+        <section>
+            <slot name="image"></slot>
+        </section>
+
+        <span>
+            <i>
+                <slot name="description"></slot>
+            </i>
+        </span>
+
+        <div>
+            <li>
+                <slot name="information"></slot>
+            </li>
+        </div>
     </article>
 </template>

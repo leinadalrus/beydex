@@ -1,19 +1,11 @@
-<script setup>
-// @/Components
+<script setup lang="ts">
+import { ref } from 'vue'
 import FixedSideBar from '@/components/FixedSideBar.vue'
 import SearchBarField from '@/components/SearchBarField.vue'
-// import ResponsiveNavLink from '@/components/ResponsiveNavLink.vue';
-
-// @/Fixtures (components)
 import TradingCard from '@/components/TradingCard.vue'
+import { IBeyInfo } from '@/models/IBeyInfo'
 
-// @/Models
-import IBeyInfo from '@/models/IBeyInfo'
-
-// Library
-import { reactive } from 'vue'
-
-const beys = reactive(IBeyInfo)
+const beys = ref<IBeyInfo[]>([])
 </script>
 
 <template>

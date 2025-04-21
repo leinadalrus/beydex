@@ -7,6 +7,19 @@ import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+    esbuild: {
+        supported: {
+            'top-level-await': true
+        }
+    },
+    optimizeDeps: {
+        esbuildOptions: {
+            target: 'esnext'
+        }
+    },
+    build: {
+        target: 'esnext'
+    },
     plugins: [vue(), legacy()],
     resolve: {
         alias: {
